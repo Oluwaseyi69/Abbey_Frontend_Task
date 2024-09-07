@@ -8,6 +8,8 @@ import Login from './src/screens/Login';
 import Toast from 'react-native-toast-message';
 import Dashboard from './src/screens/Dashboard';
 import Profile from './src/screens/Profile';
+import AddFriend from './src/screens/AddFriend';
+import Settings from './src/screens/Settings';
 
 const Stack = createStackNavigator();
 
@@ -15,15 +17,46 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="LandingPage">
-        <Stack.Screen name="SplashScreen" component={SplashScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="LandingPage" component={LandingPage} options={{ headerShown: false }} />
-        <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }}/>
-        <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>
-        <Stack.Screen name="Dashboard" component={Dashboard} options={{ headerShown: false }}/>
-        <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }}/>
-
-
-
+        <Stack.Screen
+          name="SplashScreen"
+          component={SplashScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="LandingPage"
+          component={LandingPage}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SignUp"
+          component={SignUp}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Dashboard"
+          component={Dashboard}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Profile"
+          component={Profile}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="AddFriend"
+          component={AddFriend}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Settings"
+          component={Settings}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
       <Toast />
     </NavigationContainer>

@@ -22,9 +22,9 @@ const Dashboard = ({ navigation }) => {
             <Text style={styles.cardSubtitle}>View and update your profile</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('Messages')}>
-            <Text style={styles.cardTitle}>Messages</Text>
-            <Text style={styles.cardSubtitle}>Check your messages</Text>
+          <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('AddFriend')}>
+            <Text style={styles.cardTitle}>Add Friends</Text>
+            <Text style={styles.cardSubtitle}>Connect with Friends</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('Settings')}>
@@ -32,10 +32,7 @@ const Dashboard = ({ navigation }) => {
             <Text style={styles.cardSubtitle}>Manage your settings</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('Notifications')}>
-            <Text style={styles.cardTitle}>Notifications</Text>
-            <Text style={styles.cardSubtitle}>View notifications</Text>
-          </TouchableOpacity>
+         
         </View>
         
       </ScrollView>

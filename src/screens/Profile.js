@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator, Modal } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 
@@ -17,6 +17,7 @@ const Profile = () => {
     lastName: '',
   });
   const [updateDisabled, setUpdateDisabled] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -75,16 +76,17 @@ const Profile = () => {
         const data = await response.json();
 
         if (response.status === 200) {
-          setUserInfo(prev => ({
+          setUserInfo((prev) => ({
             ...prev,
             firstName: updateInfo.firstName,
             lastName: updateInfo.lastName,
           }));
-          setUpdateDisabled(true); 
+          setUpdateDisabled(true);
+          setShowPreview(true); 
           Toast.show({
-            type: 'success',
-            text1: 'Success',
-            text2: 'Profile updated successfully',
+            type: "success",
+            text1: "Success",
+            text2: "Profile updated successfully",
           });
         } else {
           Toast.show({
@@ -127,7 +129,7 @@ const Profile = () => {
             text1: 'Success',
             text2: 'Account deleted successfully',
           });
-          navigation.navigate('Login'); // Update as necessary
+          navigation.navigate('Login'); 
         } else {
           Toast.show({
             type: 'error',
@@ -162,14 +164,18 @@ const Profile = () => {
         placeholder="First Name"
         placeholderTextColor="#ccc"
         value={updateInfo.firstName}
-        onChangeText={(text) => setUpdateInfo({ ...updateInfo, firstName: text })}
+        onChangeText={(text) =>
+          setUpdateInfo({ ...updateInfo, firstName: text })
+        }
       />
       <TextInput
         style={styles.input}
         placeholder="Last Name"
         placeholderTextColor="#ccc"
         value={updateInfo.lastName}
-        onChangeText={(text) => setUpdateInfo({ ...updateInfo, lastName: text })}
+        onChangeText={(text) =>
+          setUpdateInfo({ ...updateInfo, lastName: text })
+        }
       />
 
       <TouchableOpacity
@@ -177,7 +183,9 @@ const Profile = () => {
         onPress={handleUpdateProfile}
         disabled={isUpdating}
       >
-        <Text style={styles.buttonText}>{isUpdating ? 'Updating...' : 'Update Profile'}</Text>
+        <Text style={styles.buttonText}>
+          {isUpdating ? "Updating..." : "Update Profile"}
+        </Text>
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -185,8 +193,34 @@ const Profile = () => {
         onPress={handleDeleteAccount}
         disabled={loading}
       >
-        <Text style={styles.buttonText}>{loading ? 'Deleting...' : 'Delete Account'}</Text>
+        <Text style={styles.buttonText}>
+          {loading ? "Deleting..." : "Delete Account"}
+        </Text>
       </TouchableOpacity>
+      <Modal
+        visible={showPreview}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={() => setShowPreview(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Profile Updated</Text>
+            <Text style={styles.modalLabel}>
+              First Name: {userInfo.firstName}
+            </Text>
+            <Text style={styles.modalLabel}>
+              Last Name: {userInfo.lastName}
+            </Text>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => setShowPreview(false)}
+            >
+              <Text style={styles.buttonText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -194,14 +228,14 @@ const Profile = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     padding: 20,
-    backgroundColor: '#f4f4f4',
+    backgroundColor: "#f4f4f4",
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 20,
   },
   label: {
@@ -209,31 +243,60 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   input: {
-    backgroundColor: '#fff',
-    color: '#000',
+    backgroundColor: "#fff",
+    color: "#000",
     padding: 15,
     borderRadius: 8,
     marginBottom: 20,
-    width: '100%',
+    width: "100%",
     fontSize: 16,
   },
   button: {
     paddingVertical: 15,
     borderRadius: 8,
-    width: '100%',
-    alignItems: 'center',
+    width: "100%",
+    alignItems: "center",
     marginVertical: 10,
   },
   updateButton: {
-    backgroundColor: 'green',
+    backgroundColor: "green",
   },
   deleteButton: {
-    backgroundColor: 'red',
+    backgroundColor: "red",
   },
   buttonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    backgroundColor: "#fff",
+    padding: 20,
+    borderRadius: 8,
+    alignItems: "center",
+    width: "80%",
+  },
+  modalTitle: {
+    fontSize: 22,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  modalLabel: {
+    fontSize: 18,
+    marginBottom: 10,
+  },
+  closeButton: {
+    backgroundColor: "blue",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    marginTop: 20,
   },
 });
 
